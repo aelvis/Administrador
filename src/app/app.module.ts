@@ -3,6 +3,9 @@ import { NgModule  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { routing, appRoutingProviders } from './app.routing';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './component/login/login.component';
@@ -28,8 +31,11 @@ import { AdminGuard } from './services/admin.guard';
   imports: [
     BrowserModule,
     FormsModule,
-	  HttpClientModule,
-	  routing
+	HttpClientModule,
+	routing,
+	CommonModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     appRoutingProviders,

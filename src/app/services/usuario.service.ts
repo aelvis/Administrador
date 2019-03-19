@@ -35,11 +35,23 @@ export class UsuarioService{
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/productos/producto/obtenerProductos', params, {headers: headers});
 	}
-	registrarProducto(producto){
+	registrarProducto(nombre,descripcion){
 		let params = new HttpParams();
-		params = params.append('producto', producto.nombre);
-		params = params.append('incluir', producto.descripcion);
+		params = params.append('producto', nombre);
+		params = params.append('incluir', descripcion);
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/productos/producto/registrarProducto', params, {headers: headers});	
+	}
+	activarProducto(id){
+		let params = new HttpParams();
+		params = params.append('producto', id);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/productos/producto/activarProducto', params, {headers: headers});	
+	}
+	desactivarProducto(id){
+		let params = new HttpParams();
+		params = params.append('producto', id);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/productos/producto/desactivarProducto', params, {headers: headers});	
 	}
 }
