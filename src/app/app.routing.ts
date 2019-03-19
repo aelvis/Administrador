@@ -17,7 +17,7 @@ const appRoutes: Routes = [
 	{path: 'inicio', component: InicioComponent, canActivate: [AdminGuard]},
 	{path: 'producto', component: ProductoComponent, canActivate: [AdminGuard]},
 	{path: 'producto-editar/:id_producto', component: ProductoEditarComponent, canActivate: [AdminGuard]},
-	{path: 'reporte-producto/:id_producto', component: ReporteProductoComponent, canActivate: [AdminGuard]},
+	{path: 'producto-reporte/:id_producto', component: ReporteProductoComponent, canActivate: [AdminGuard]},
 	{path: '**', component: LoginComponent},
 ];
 

@@ -4,6 +4,22 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
+			<div class="form-inline float-left">
+			  <div class="form-group mx-sm-3 mb-2">
+			    <label for="inputPassword2" class="sr-only">Nombre</label>
+			    <input type="text" class="form-control" #nombre_buscar placeholder="Nombre">
+			  </div>
+			  <button *ngIf="buscar_nombre == true" (click)="buscarNombre(nombre_buscar.value)" class="btn btn-primary mb-2">Buscar por Nombre</button>
+			</div>
+			<div class="form-inline float-right">
+			  <div class="form-group mx-sm-3 mb-2">
+			    <label for="inputPassword2" class="sr-only">Código</label>
+			    <input type="text" class="form-control" #codigo_buscar placeholder="Código de Barras">
+			  </div>
+			  <button *ngIf="buscar_codigo == true" (click)="buscarCodigo(codigo_buscar.value)" class="btn btn-primary mb-2">Buscar por Código</button>
+			</div>
+		</div>
+		<div class="col-md-12">
 			<table class="table">
 			  <thead class="thead-dark">
 			    <tr>
@@ -18,14 +34,14 @@
 			    <tr *ngFor="let pro of producto; index as i">
 			      <th scope="row">{{i+1}}</th>
 			      <td>{{pro.nombre}}</td>
-			      <td>@mdo</td>
-			      <td>@mdo</td>
-			      <td *ngIf="pro.estado == 1" (click)="desactivar(pro.id)" class="table-success">Activo</td>
-			      <td *ngIf="pro.estado == 2" (click)="activar(pro.id)" class="table-danger">Inactivo</td>
+			      <td><button class="btn btn-warning" [routerLink]="['/producto-editar', num1+pro.id+num2]">Editar</button></td>
+			      <td><button class="btn btn-info" [routerLink]="['/producto-reporte', num1+pro.id+num2]">Editar</button></td>
+			      <td *ngIf="pro.estado == 1 && estado == true" (click)="desactivar(pro.id)" class="table-success">Activo</td>
+			      <td *ngIf="pro.estado == 2 && estado == true" (click)="activar(pro.id)" class="table-danger">Inactivo</td>
 			    </tr>
 			  </tbody>
 			</table>
-
+			<button *ngIf="actualizar == true" (click)="obtenerProducto()" class="btn btn-primary mb-2">Actualizar</button>
 		</div>
 	</div>
 </div>

@@ -1,4 +1,83 @@
 <nav-component></nav-component>
 <br>
-<h1 class="h3 mb-3 font-weight-normal text-center" style="color: red">BIENVENIDO EDITAR PRODUCTO</h1>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore recusandae ipsa laudantium eligendi aliquam omnis. Dolorum, explicabo sunt debitis, accusantium reiciendis quaerat! Alias, corporis, dolores! Eveniet itaque accusamus consequuntur iure?</p>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-3">
+			  <h1 class="h3 mb-3 font-weight-normal text-center" style="color: red"><u>Actualizar</u></h1>
+			  <div class="form-group">
+			    <label for="exampleFormControlInput1">Nombre</label>
+			    <input type="text" class="form-control" #nombre_actualizar_producto value="{{obtener_producto_editar?.nombre}}">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleFormControlInput1">Codigo de Barras</label>
+			    <input type="text" class="form-control" #codigo_actualizar_producto value="{{obtener_producto_editar?.codigo}}">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleFormControlTextarea1">Descripción</label>
+			    <textarea class="form-control"  #descripcion_actualizar_producto rows="3">{{obtener_producto_editar?.descripcion}}</textarea>
+			  </div>
+			  <div class="form-group">
+			  	<button class="btn btn-info" (click)="actualizarProducto(nombre_actualizar_producto.value, codigo_actualizar_producto.value, descripcion_actualizar_producto.value)">Actualizar</button>
+			  </div>
+		</div>
+		<div class="col-md-7">
+			<h1 class="h3 mb-3 font-weight-normal text-center" style="color: red"><u data-toggle="modal" data-target="#sucursalesAgregar">Sucursales</u></h1>
+			<table class="table">
+			  <thead class="thead-dark">
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">Sucursal</th>
+			      <th scope="col">Stock</th>
+			      <th scope="col">Estado</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <th scope="row">1</th>
+			      <td>Mark</td>
+			      <td>Otto</td>
+			      <td>@mdo</td>
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+</div>
+<div class="modal fade" id="sucursalesAgregar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Productos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<form>
+		  <div class="form-group">
+		    <label for="exampleFormControlInput1">Nombre</label>
+		    <input type="email" class="form-control" #nombre placeholder="Producto">
+		  </div>
+		    <div class="form-group">
+		    <label for="exampleFormControlSelect1">Sucursal</label>
+		    <select class="form-control">
+		      	<ng-template ngFor let-suc [ngForOf]="sucursal">
+		      		<option *ngIf="suc.sucursal_id == null" value="{{suc.id}}">{{suc.nombre}}</option>
+		      	</ng-template>
+		    </select>
+		  </div>
+		  <div class="form-group">
+		    <label for="exampleFormControlTextarea1">Descripción</label>
+		    <textarea class="form-control" rows="3" #descripcion></textarea>
+		  </div>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button class="btn btn-primary" (click)="registrarProducto(nombre.value,descripcion.value)" data-dismiss="modal">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

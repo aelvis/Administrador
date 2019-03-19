@@ -54,4 +54,31 @@ export class UsuarioService{
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/productos/producto/desactivarProducto', params, {headers: headers});	
 	}
+	buscarProductoNombre(nombre){
+		let params = new HttpParams();
+		params = params.append('nombre', nombre);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/productos/producto/buscarProductoNombre', params, {headers: headers});	
+	}
+	buscarProductoCodigo(codigo){
+		let params = new HttpParams();
+		params = params.append('codigo', codigo);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/productos/producto/buscarProductoCodigo', params, {headers: headers});	
+	}
+	obtenerProductosEditar(id){
+		let params = new HttpParams();
+		params = params.append('id_nuevo', id);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/productos/producto/obtenerProductosEditar', params, {headers: headers});	
+	}
+	actualizarProductosEditar(id,nombre,barras,descripcion){
+		let params = new HttpParams();
+		params = params.append('id', id);
+		params = params.append('nombre', nombre);
+		params = params.append('barras', barras);
+		params = params.append('descripcion', descripcion);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/productos/producto/actualizarProducto', params, {headers: headers});	
+	}
 }
