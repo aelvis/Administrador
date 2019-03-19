@@ -18,7 +18,8 @@
 			    <textarea class="form-control"  #descripcion_actualizar_producto rows="3">{{obtener_producto_editar?.descripcion}}</textarea>
 			  </div>
 			  <div class="form-group">
-			  	<button class="btn btn-info" (click)="actualizarProducto(nombre_actualizar_producto.value, codigo_actualizar_producto.value, descripcion_actualizar_producto.value)">Actualizar</button>
+			  	<button *ngIf="actualizar_producto == true" class="btn btn-info btn-block" (click)="actualizarProducto(nombre_actualizar_producto.value, codigo_actualizar_producto.value, descripcion_actualizar_producto.value)">Actualizar</button>
+			  	<button *ngIf="actualizar_producto == false" class="btn btn-success btn-block">Cargando</button>
 			  </div>
 		</div>
 		<div class="col-md-7">
@@ -30,14 +31,16 @@
 			      <th scope="col">Sucursal</th>
 			      <th scope="col">Stock</th>
 			      <th scope="col">Estado</th>
+			      <th scope="col">Precio</th>
 			    </tr>
 			  </thead>
 			  <tbody>
-			    <tr>
-			      <th scope="row">1</th>
-			      <td>Mark</td>
-			      <td>Otto</td>
-			      <td>@mdo</td>
+			    <tr *ngFor="let ps of obtener_producto_sucursal; index as i">
+			      <th scope="row">{{i+1}}</th>
+			      <td>{{ps.nombre}}</td><input type="hidden" value="{{ps.id}}" #id_editar_producto_sucursal>
+			      <td> <input type="number" class="form-control" value="{{ps.stock}}" #stock_editar_producto_sucursal (keyup.enter)="editarSucursalProducto(stock_editar_producto_sucursal.value,id_editar_producto_sucursal.value)"></td>
+			      <td>{{ps.nombre_estado}}</td>
+			      <td><button class="btn btn-danger" (click)="modalAgregarPrecio(ps.id)">Precio</button></td>
 			    </tr>
 			  </tbody>
 			</table>
@@ -55,28 +58,46 @@
         </button>
       </div>
       <div class="modal-body">
-		<form>
+		<div>
 		  <div class="form-group">
-		    <label for="exampleFormControlInput1">Nombre</label>
-		    <input type="email" class="form-control" #nombre placeholder="Producto">
+		    <label for="exampleFormControlInput1">Stock</label>
+		    <input type="number" class="form-control" #stock placeholder="80" [(ngModel)]="nombre_sucursal">
 		  </div>
 		    <div class="form-group">
 		    <label for="exampleFormControlSelect1">Sucursal</label>
-		    <select class="form-control">
+		    <select class="form-control" #sucursal_agregar>
 		      	<ng-template ngFor let-suc [ngForOf]="sucursal">
 		      		<option *ngIf="suc.sucursal_id == null" value="{{suc.id}}">{{suc.nombre}}</option>
 		      	</ng-template>
 		    </select>
 		  </div>
-		  <div class="form-group">
-		    <label for="exampleFormControlTextarea1">Descripción</label>
-		    <textarea class="form-control" rows="3" #descripcion></textarea>
-		  </div>
-		</form>
+		</div>
+      </div>
+      <div *ngIf="agregar_sucursal_botton == true" class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button class="btn btn-primary" (click)="agregarSucursal(stock.value,sucursal_agregar.value)">Guardar</button>
+      </div>
+      <div *ngIf="agregar_sucursal_botton == false" class="modal-footer">
+		<button class="btn btn-success btn-block">Cargando ...</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalAgregarPrecio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Productos Sucursales Precio</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+			<p>Precio</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button class="btn btn-primary" (click)="registrarProducto(nombre.value,descripcion.value)" data-dismiss="modal">Guardar</button>
+        <button class="btn btn-primary" (click)="agregarSucursal()" data-dismiss="modal">Guardar</button>
       </div>
     </div>
   </div>
