@@ -30,8 +30,8 @@
 			      <th scope="col">#</th>
 			      <th scope="col">Sucursal</th>
 			      <th scope="col">Stock</th>
-			      <th scope="col">Estado</th>
 			      <th scope="col">Precio</th>
+			      <th scope="col">Estado</th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -39,8 +39,9 @@
 			      <th scope="row">{{i+1}}</th>
 			      <td>{{ps.nombre}}</td><input type="hidden" value="{{ps.id}}" #id_editar_producto_sucursal>
 			      <td> <input type="number" class="form-control" value="{{ps.stock}}" #stock_editar_producto_sucursal (keyup.enter)="editarSucursalProducto(stock_editar_producto_sucursal.value,id_editar_producto_sucursal.value)"></td>
-			      <td>{{ps.nombre_estado}}</td>
-			      <td><button class="btn btn-danger" (click)="modalAgregarPrecio(ps.id)">Precio</button></td>
+			      <td><button class="btn btn-danger" (click)="modalAgregarPrecio(ps.id,ps.codigo_sucursal)">Precio</button></td>
+			      <td *ngIf="ps.nombre_estado == 'Activo' && estado_pro_sucu == true" class="table-success" (click)="desactivarPrecioSucursal(ps.id)">{{ps.nombre_estado}}</td>
+			      <td *ngIf="ps.nombre_estado == 'Desactivado' && estado_pro_sucu == true" class="table-danger" (click)="activarPrecioSucursal(ps.id)">{{ps.nombre_estado}}</td>
 			    </tr>
 			  </tbody>
 			</table>
@@ -96,8 +97,7 @@
 			<p>Precio</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button class="btn btn-primary" (click)="agregarSucursal()" data-dismiss="modal">Guardar</button>
+        <button class="btn btn-warning" (click)="cerrarModalPrecio()">Cerrar</button>
       </div>
     </div>
   </div>

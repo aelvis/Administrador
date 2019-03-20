@@ -16,10 +16,14 @@ export class ProductoEditarComponent implements OnInit{
 	public nombre_sucursal;
 	public agregar_sucursal_botton:boolean;
 	public actualizar_producto:boolean;
+	public estado_pro_sucu;
+	public producto_sucursal_id;
+	public sucursal_id;
 	constructor(private toastr: ToastrService,private _usuarioService: UsuarioService, private _router: Router, private route:ActivatedRoute){
 		this.route.params.forEach(x => this. id_producto = x['id_producto']);
 		this.agregar_sucursal_botton = true;
 		this.actualizar_producto = true;
+		this.estado_pro_sucu = true;
 	}
 	showSuccess(titulo,mensaje) {
     	this.toastr.success(mensaje, titulo);
@@ -108,28 +112,83 @@ export class ProductoEditarComponent implements OnInit{
 			this.agregar_sucursal_botton = true;
 		}
 	}
-	modalAgregarPrecio(id){
+	modalAgregarPrecio(producto_sucursal_id,sucursal_id){
+		this.producto_sucursal_id = producto_sucursal_id;
+		this.sucursal_id = sucursal_id;
 		$('#modalAgregarPrecio').modal('show')
 	}
+	cerrarModalPrecio(){
+		this.producto_sucursal_id = "";
+		this.sucursal_id = "";
+		$('#modalAgregarPrecio').modal('hide')
+	}
 	editarSucursalProducto(stock,id){
-			this._usuarioService.actualizarSucursalesProductosEditar(stock,id).subscribe(
-				res => {
-					if(res["mensaje"].terminar){
-					  	localStorage.clear();
-					  	this._router.navigate(['/login']);
+		this._usuarioService.actualizarSucursalesProductosEditar(stock,id).subscribe(
+			res => {
+				if(res["mensaje"].terminar){
+					localStorage.clear();
+					this._router.navigate(['/login']);
+				}else{
+					if(res["mensaje"].codigo == 'success'){
+						this.showSuccess("Alerta","Actualizado");
+						this.obtenerProducto();
 					}else{
-						if(res["mensaje"].codigo == 'success'){
-							this.showSuccess("Alerta","Actualizado");
-							this.obtenerProducto();
-						}else{
-							this.showError("Alerta","Error de Internet");
-							this.obtenerProducto();
-						}
+						this.showError("Alerta","Error de Internet");
+						this.obtenerProducto();
 					}
-				},
-				error => {
-					this.showError("Alerta","Error de Internet");
 				}
-			);
+			},
+			error => {
+				this.showError("Alerta","Error de Internet");
+			}
+		);
+	}
+	desactivarPrecioSucursal(id){
+		this.estado_pro_sucu = false;
+		this._usuarioService.desactivarProductoSucursalEditar(id).subscribe(
+			res => {
+				if(res["mensaje"].terminar){
+				  	localStorage.clear();
+				  	this._router.navigate(['/login']);
+				}else{
+					if(res["mensaje"].codigo == "success"){
+						this.showSuccess("Alerta","Se Actualizó Correctamente");
+						this.obtenerProducto();
+						this.estado_pro_sucu = true;
+					}else{
+						this.showError("Alerta","Conexión Lenta, volver a Intentar");
+						this.estado_pro_sucu = true;
+					}
+				}
+			},
+			error => {
+				this.showError("Alerta","Error de Internet");
+				this.estado_pro_sucu = true;
+			}
+		);
+	}
+	activarPrecioSucursal(id){
+		this.estado_pro_sucu = false;
+		this._usuarioService.activarProductoSucursalEditar(id).subscribe(
+			res => {
+				if(res["mensaje"].terminar){
+				  	localStorage.clear();
+				  	this._router.navigate(['/login']);
+				}else{
+					if(res["mensaje"].codigo == "success"){
+						this.showSuccess("Alerta","Se Actualizó Correctamente");
+						this.obtenerProducto();
+						this.estado_pro_sucu = true;
+					}else{
+						this.showError("Alerta","Conexión Lenta, volver a Intentar");
+						this.estado_pro_sucu = true;
+					}
+				}
+			},
+			error => {
+				this.showError("Alerta","Error de Internet");
+				this.estado_pro_sucu = true;
+			}
+		);
 	}
 }

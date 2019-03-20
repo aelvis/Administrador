@@ -96,4 +96,16 @@ export class UsuarioService{
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/productos/producto/actualizarSucursalesProductosEditar', params, {headers: headers});	
 	}
+	activarProductoSucursalEditar(id){
+		let params = new HttpParams();
+		params = params.append('producto', id);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/productos/producto/activarProductoSucursalEditar', params, {headers: headers});	
+	}
+	desactivarProductoSucursalEditar(id){
+		let params = new HttpParams();
+		params = params.append('producto', id);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/productos/producto/desactivarProductoSucursalEditar', params, {headers: headers});	
+	}
 }
