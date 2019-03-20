@@ -108,4 +108,29 @@ export class UsuarioService{
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/productos/producto/desactivarProductoSucursalEditar', params, {headers: headers});	
 	}
+	obtenerPreciosProductoSucursales(id){
+		let params = new HttpParams();
+		params = params.append('psi', id);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/productos/producto/obtenerPreciosProductoSucursales', params, {headers: headers});	
+	}
+	activarProductoSucursalEditarPrecio(id){
+		let params = new HttpParams();
+		params = params.append('producto_unidad', id);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/productos/producto/activarProductoUnidad', params, {headers: headers});	
+	}
+	desactivarProductoSucursalEditarPrecio(id){
+		let params = new HttpParams();
+		params = params.append('producto_unidad', id);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/productos/producto/desactivarProductoUnidad', params, {headers: headers});	
+	}
+	actualizarProductoSucursalEditarPrecio(precio,id){
+		let params = new HttpParams();
+		params = params.append('id', id);
+		params = params.append('precio', precio);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/productos/producto/actualizarProductoUnidad', params, {headers: headers});	
+	}
 }

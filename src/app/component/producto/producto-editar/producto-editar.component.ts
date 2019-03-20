@@ -19,11 +19,15 @@ export class ProductoEditarComponent implements OnInit{
 	public estado_pro_sucu;
 	public producto_sucursal_id;
 	public sucursal_id;
+	public productos_precio_su;
+	public estado_pro_sucu_pre;
+	public unidad_pro;
 	constructor(private toastr: ToastrService,private _usuarioService: UsuarioService, private _router: Router, private route:ActivatedRoute){
 		this.route.params.forEach(x => this. id_producto = x['id_producto']);
 		this.agregar_sucursal_botton = true;
 		this.actualizar_producto = true;
 		this.estado_pro_sucu = true;
+		this.estado_pro_sucu_pre = true;
 	}
 	showSuccess(titulo,mensaje) {
     	this.toastr.success(mensaje, titulo);
@@ -115,14 +119,112 @@ export class ProductoEditarComponent implements OnInit{
 	modalAgregarPrecio(producto_sucursal_id,sucursal_id){
 		this.producto_sucursal_id = producto_sucursal_id;
 		this.sucursal_id = sucursal_id;
-		$('#modalAgregarPrecio').modal('show')
+		$('#modalAgregarPrecio').modal('show');
+		this._usuarioService.obtenerPreciosProductoSucursales(this.producto_sucursal_id).subscribe(
+			res => {
+				if(res["mensaje"].terminar){
+				  	localStorage.clear();
+				  	this._router.navigate(['/login']);
+				}else{
+					if(res["mensaje"].productospreciosu){
+						this.productos_precio_su = res["mensaje"].productospreciosu;
+						this.unidad_pro = res["mensaje"].unidad_pro;
+					}else{
+						this.showError("Alerta","No hay Precios de Productos");
+					}
+				}
+			},
+			error => {
+				this.showError("Alerta","Error de Internet");
+			}
+		);
+	}
+	desactivarPrecioSucursal(id){
+		this.estado_pro_sucu_pre = false;
+		this._usuarioService.desactivarProductoSucursalEditarPrecio(id).subscribe(
+			res => {
+				if(res["mensaje"].terminar){
+				  	localStorage.clear();
+				  	this._router.navigate(['/login']);
+				}else{
+					if(res["mensaje"].codigo == "success"){
+						this.showSuccess("Alerta","Se Actualizó Correctamente");
+							this._usuarioService.obtenerPreciosProductoSucursales(this.producto_sucursal_id).subscribe(
+								res => {
+									if(res["mensaje"].terminar){
+									  	localStorage.clear();
+									  	this._router.navigate(['/login']);
+									}else{
+										if(res["mensaje"].productospreciosu){
+											this.productos_precio_su = res["mensaje"].productospreciosu;
+										}else{
+											this.showError("Alerta","No hay Precios de Productos");
+										}
+									}
+								},
+								error => {
+									this.showError("Alerta","Error de Internet");
+								}
+							);
+						this.estado_pro_sucu_pre = true;
+					}else{
+						this.showError("Alerta","Conexión Lenta, volver a Intentar");
+						this.estado_pro_sucu_pre = true;
+					}
+				}
+			},
+			error => {
+				this.showError("Alerta","Error de Internet");
+				this.estado_pro_sucu_pre = true;
+			}
+		);
+	}
+	activarPrecioSucursal(id){
+		this.estado_pro_sucu_pre = false;
+		this._usuarioService.activarProductoSucursalEditarPrecio(id).subscribe(
+			res => {
+				if(res["mensaje"].terminar){
+				  	localStorage.clear();
+				  	this._router.navigate(['/login']);
+				}else{
+					if(res["mensaje"].codigo == "success"){
+						this.showSuccess("Alerta","Se Actualizó Correctamente");
+							this._usuarioService.obtenerPreciosProductoSucursales(this.producto_sucursal_id).subscribe(
+								res => {
+									if(res["mensaje"].terminar){
+									  	localStorage.clear();
+									  	this._router.navigate(['/login']);
+									}else{
+										if(res["mensaje"].productospreciosu){
+											this.productos_precio_su = res["mensaje"].productospreciosu;
+										}else{
+											this.showError("Alerta","No hay Precios de Productos");
+										}
+									}
+								},
+								error => {
+									this.showError("Alerta","Error de Internet");
+								}
+							);
+						this.estado_pro_sucu_pre = true;
+					}else{
+						this.showError("Alerta","Conexión Lenta, volver a Intentar");
+						this.estado_pro_sucu_pre = true;
+					}
+				}
+			},
+			error => {
+				this.showError("Alerta","Error de Internet");
+				this.estado_pro_sucu_pre = true;
+			}
+		);
 	}
 	cerrarModalPrecio(){
 		this.producto_sucursal_id = "";
 		this.sucursal_id = "";
-		$('#modalAgregarPrecio').modal('hide')
+		$('#modalAgregarPrecio').modal('hide');
 	}
-	editarSucursalProducto(stock,id){
+	editarSucursalProductoPrecio(stock,id){
 		this._usuarioService.actualizarSucursalesProductosEditar(stock,id).subscribe(
 			res => {
 				if(res["mensaje"].terminar){
@@ -143,7 +245,43 @@ export class ProductoEditarComponent implements OnInit{
 			}
 		);
 	}
-	desactivarPrecioSucursal(id){
+	editarSucursalProducto(precio,id){
+		this._usuarioService.actualizarProductoSucursalEditarPrecio(precio,id).subscribe(
+			res => {
+				if(res["mensaje"].terminar){
+					localStorage.clear();
+					this._router.navigate(['/login']);
+				}else{
+					if(res["mensaje"].codigo == 'success'){
+						this.showSuccess("Alerta","Actualizado");
+							this._usuarioService.obtenerPreciosProductoSucursales(this.producto_sucursal_id).subscribe(
+								res => {
+									if(res["mensaje"].terminar){
+									  	localStorage.clear();
+									  	this._router.navigate(['/login']);
+									}else{
+										if(res["mensaje"].productospreciosu){
+											this.productos_precio_su = res["mensaje"].productospreciosu;
+										}else{
+											this.showError("Alerta","No hay Precios de Productos");
+										}
+									}
+								},
+								error => {
+									this.showError("Alerta","Error de Internet");
+								}
+							);
+					}else{
+						this.showError("Alerta","Error de Internet - volver a Intentarlo");
+					}
+				}
+			},
+			error => {
+				this.showError("Alerta","Error de Internet");
+			}
+		);
+	}
+	desactivarStockSucursal(id){
 		this.estado_pro_sucu = false;
 		this._usuarioService.desactivarProductoSucursalEditar(id).subscribe(
 			res => {
@@ -167,7 +305,7 @@ export class ProductoEditarComponent implements OnInit{
 			}
 		);
 	}
-	activarPrecioSucursal(id){
+	activarStockSucursal(id){
 		this.estado_pro_sucu = false;
 		this._usuarioService.activarProductoSucursalEditar(id).subscribe(
 			res => {
