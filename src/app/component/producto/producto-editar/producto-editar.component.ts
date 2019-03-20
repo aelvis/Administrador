@@ -13,7 +13,6 @@ export class ProductoEditarComponent implements OnInit{
 	public id_producto;
 	public sucursal;
 	public obtener_producto_sucursal;
-	public nombre_sucursal;
 	public agregar_sucursal_botton:boolean;
 	public actualizar_producto:boolean;
 	public estado_pro_sucu;
@@ -22,9 +21,13 @@ export class ProductoEditarComponent implements OnInit{
 	public productos_precio_su;
 	public estado_pro_sucu_pre;
 	public unidad_pro;
+	public agregar_sucursal_precio_botton:boolean;
+	public nombre_sucursal;
+	public precio_sucursal_pro;
 	constructor(private toastr: ToastrService,private _usuarioService: UsuarioService, private _router: Router, private route:ActivatedRoute){
-		this.route.params.forEach(x => this. id_producto = x['id_producto']);
+		this.route.params.forEach(x => this.id_producto = x['id_producto']);
 		this.agregar_sucursal_botton = true;
+		this.agregar_sucursal_precio_botton = true;
 		this.actualizar_producto = true;
 		this.estado_pro_sucu = true;
 		this.estado_pro_sucu_pre = true;
@@ -94,7 +97,7 @@ export class ProductoEditarComponent implements OnInit{
 					  	this._router.navigate(['/login']);
 					}else{
 						if(res["mensaje"].codigo == 'success'){
-							$('#sucursalesAgregar').modal('hide')
+							$('#sucursalesAgregar').modal('hide');
 							this.showSuccess("Alerta","Agregar");
 							this.obtenerProducto();
 							this.nombre_sucursal = "";
@@ -119,7 +122,6 @@ export class ProductoEditarComponent implements OnInit{
 	modalAgregarPrecio(producto_sucursal_id,sucursal_id){
 		this.producto_sucursal_id = producto_sucursal_id;
 		this.sucursal_id = sucursal_id;
-		$('#modalAgregarPrecio').modal('show');
 		this._usuarioService.obtenerPreciosProductoSucursales(this.producto_sucursal_id).subscribe(
 			res => {
 				if(res["mensaje"].terminar){
@@ -129,8 +131,12 @@ export class ProductoEditarComponent implements OnInit{
 					if(res["mensaje"].productospreciosu){
 						this.productos_precio_su = res["mensaje"].productospreciosu;
 						this.unidad_pro = res["mensaje"].unidad_pro;
+						$('#modalAgregarPrecio').modal('show');
 					}else{
 						this.showError("Alerta","No hay Precios de Productos");
+						this.productos_precio_su = [];
+						this.unidad_pro = res["mensaje"].unidad_pro;
+						$('#modalAgregarPrecio').modal('show');
 					}
 				}
 			},
@@ -222,6 +228,8 @@ export class ProductoEditarComponent implements OnInit{
 	cerrarModalPrecio(){
 		this.producto_sucursal_id = "";
 		this.sucursal_id = "";
+		this.productos_precio_su = [];
+		this.unidad_pro = [];
 		$('#modalAgregarPrecio').modal('hide');
 	}
 	editarSucursalProductoPrecio(stock,id){
@@ -328,5 +336,54 @@ export class ProductoEditarComponent implements OnInit{
 				this.estado_pro_sucu = true;
 			}
 		);
+	}
+	agregarPrecioProductoSucursal(precio,unidad_agregar){
+		this.agregar_sucursal_precio_botton = false;
+		if(precio.length > 0 && unidad_agregar.length > 0){
+			this._usuarioService.agregarSucursalesPrecioProductosEditar(this.producto_sucursal_id,unidad_agregar,precio,this.id_producto,this.sucursal_id).subscribe(
+				res => {
+					if(res["mensaje"].terminar){
+					  	localStorage.clear();
+					  	this._router.navigate(['/login']);
+					}else{
+						if(res["mensaje"].codigo == 'success'){
+						this.agregar_sucursal_precio_botton = true;
+						this.showSuccess("Alerta","Agregado");
+							this._usuarioService.obtenerPreciosProductoSucursales(this.producto_sucursal_id).subscribe(
+								res => {
+									if(res["mensaje"].terminar){
+									  	localStorage.clear();
+									  	this._router.navigate(['/login']);
+									}else{
+										if(res["mensaje"].productospreciosu){
+											this.productos_precio_su = res["mensaje"].productospreciosu;
+											this.unidad_pro = res["mensaje"].unidad_pro;
+											this.precio_sucursal_pro = "";
+										}else{
+											this.showError("Alerta","No hay Precios de Productos");
+											this.agregar_sucursal_precio_botton = true;
+										}
+									}
+								},
+								error => {
+									this.showError("Alerta","Error de Internet");
+									this.agregar_sucursal_precio_botton = true;
+								}
+							);
+						}else{
+							this.showError("Alerta","Error de Internet - Volver a intentarlo");
+							this.agregar_sucursal_precio_botton = true;
+						}
+					}
+				},
+				error => {
+					this.showError("Alerta","Error de Internet");
+					this.agregar_sucursal_precio_botton = true;
+				}
+			);
+		}else{
+			this.showError("Alerta","Agregrar por favor campos");
+			this.agregar_sucursal_precio_botton = true;
+		}
 	}
 }

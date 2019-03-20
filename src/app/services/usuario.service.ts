@@ -133,4 +133,14 @@ export class UsuarioService{
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/productos/producto/actualizarProductoUnidad', params, {headers: headers});	
 	}
+	agregarSucursalesPrecioProductosEditar(producto_sucursal_id,unidad_agregar,precio,id_producto,sucursal_id){
+		let params = new HttpParams();
+		params = params.append('producto', id_producto);
+		params = params.append('precio', precio);
+		params = params.append('unidad', unidad_agregar);
+		params = params.append('sucursal', sucursal_id);
+		params = params.append('producto_sucursal', producto_sucursal_id);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/productos/producto/agregarProductoUnidad', params, {headers: headers});	
+	}
 }

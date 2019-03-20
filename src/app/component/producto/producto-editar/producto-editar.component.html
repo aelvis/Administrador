@@ -87,15 +87,10 @@
 <div class="modal fade" id="modalAgregarPrecio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Agregar Productos Sucursales Precio</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
       <div class="modal-body">
       	<div class="row">
 	      <div class="col-md-4">
+	      	<h1 class="h3 mb-3 font-weight-normal text-center" style="color: red"><u>Agregar Precio</u></h1>
 	      	<div class="form-group">
 			    <label for="exampleFormControlInput1">Precio</label>
 			    <input type="text" class="form-control" #precio placeholder="8.3" [(ngModel)]="precio_sucursal_pro">
@@ -104,12 +99,14 @@
 			    <label for="exampleFormControlSelect1">Unidades</label>
 			    <select class="form-control" #unidad_agregar>
 			      	<ng-template ngFor let-und [ngForOf]="unidad_pro">
-			      		<option *ngIf="und.unidad_id == null" value="{{suc.id}}">{{suc.nombre}}</option>
+			      		<option *ngIf="und.unidad_id == null" value="{{und.id}}">{{und.nombre}} - {{und.representacion}}</option>
 			      	</ng-template>
 			    </select>
 			</div>
+			<div class="form-group"><button *ngIf="agregar_sucursal_precio_botton == true" class="btn btn-primary" (click)="agregarPrecioProductoSucursal(precio.value,unidad_agregar.value)">Agregar</button></div>
 	      </div>
 	      <div class="col-md-8">
+	      	<h1 class="h3 mb-3 font-weight-normal text-center" style="color: red"><u>Lista de Precios</u></h1>
 			<table class="table">
 			  <thead class="thead-dark">
 			    <tr>
