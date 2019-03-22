@@ -149,4 +149,16 @@ export class UsuarioService{
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/reportes/ticket/obtenerTicketReporte', params, {headers: headers});	
 	}
+	enviarFechaObtenerTicketConfecha(fecha){
+		let params = new HttpParams();
+		params = params.append('fecha', fecha);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/reportes/ticket/obtenerTicketReporte', params, {headers: headers});	
+	}
+	obtenerPedidoCajaModal(id){
+		let params = new HttpParams();
+		params = params.append('id_pedido', id);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/reportes/ticket/obtenerPedido', params, {headers: headers});	
+	}
 }

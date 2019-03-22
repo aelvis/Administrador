@@ -1,4 +1,66 @@
 <nav-component></nav-component>
 <br>
-<h1 class="h3 mb-3 font-weight-normal text-center" style="color: red">VENTAS</h1>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore recusandae ipsa laudantium eligendi aliquam omnis. Dolorum, explicabo sunt debitis, accusantium reiciendis quaerat! Alias, corporis, dolores! Eveniet itaque accusamus consequuntur iure?</p>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<form class="form-inline">
+			<div class="form-group mx-sm-3 mb-2">
+		    	<input type="date" class="form-control" #fecha > 
+		  	</div>
+		  	<button class="btn btn-success" (click)="obtenerProductoConFecha(fecha.value)">Buscar</button>
+		  </form>
+			<h1 class="h3 mb-3 font-weight-normal text-center" style="color: red">TOTAL DEL DÍA S/ {{total?.total | number:'1.0'}}</h1>
+			<table class="table">
+			  <thead class="thead-dark">
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">Tipo Documento</th>
+			      <th scope="col">Nombre</th>
+			      <th scope="col">Total</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr *ngFor="let up of ticket; index as i">
+			      <th scope="row">{{i+1}}</th>
+			      <td (click)="abrirModal(up.id_ticket_cliente)">{{up.dni_ruc}}</td>
+			      <td>{{up.nombre}}</td>
+			      <td>S/. {{up.total | number:'1.0'}}</td>
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+		<table class="table">
+					  <thead class="thead-dark">
+					    <tr>
+					      <th scope="col">#</th>
+					      <th scope="col">Producto</th>
+					      <th scope="col">Unidad</th>
+					      <th scope="col">Cantidad</th>
+					      <th scope="col">Total</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr *ngFor="let pedi of pedido; index as i">
+					      <th scope="row">{{i+1}}</th>
+					      <td>{{pedi.nombre_producto}}</td>
+					      <td>{{pedi.nombre_unidad}}</td>
+					      <td *ngIf="pedi.estado == 2"><input type="text" value="{{pedi.cantidad}}" class="form-control" #cantidad_actualizar placeholder="Cantidad" (keyup.enter)="actualizarPedidoAlCarrito(pedi.id,cantidad_actualizar.value,pedi.precio_producto, pedi.representacion, pedi.id_producto_sucursal)"></td>
+					      <td *ngIf="pedi.estado == 1">{{ pedi.cantidad}}</td>
+					      <td>S/. {{ pedi.precio}}</td>
+					    </tr>
+					  </tbody>
+					</table>
+      </div>
+      <div class="modal-footer">
+        <button (click)="cerrarModal()" class="btn btn-primary">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
