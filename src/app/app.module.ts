@@ -17,16 +17,20 @@ import { ProductoEditarComponent } from './component/producto/producto-editar/pr
 import { ReporteProductoComponent } from './component/producto/reporte/reporte.component';
 
 import { AdminGuard } from './services/admin.guard';
+import { VentaComponent } from './component/venta/venta.component';
+import { VentaVerComponent } from './component/venta-ver/venta-ver.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent,
-    InicioComponent,
-    NavAdminComponent,
-    ProductoComponent,
+  AppComponent,
+  LoginComponent,
+  InicioComponent,
+  NavAdminComponent,
+  ProductoComponent,
 	ProductoEditarComponent,
-	ReporteProductoComponent
+	ReporteProductoComponent,
+	VentaComponent,
+	VentaVerComponent
   ],
   imports: [
     BrowserModule,

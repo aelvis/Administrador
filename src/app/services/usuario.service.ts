@@ -143,4 +143,10 @@ export class UsuarioService{
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/productos/producto/agregarProductoUnidad', params, {headers: headers});	
 	}
+	enviarFechaObtenerTicket(){
+		let params = new HttpParams();
+		params = params.append('fecha', '');
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/reportes/ticket/obtenerTicketReporte', params, {headers: headers});	
+	}
 }
