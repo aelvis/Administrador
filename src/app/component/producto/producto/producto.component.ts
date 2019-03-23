@@ -52,7 +52,7 @@ export class ProductoComponent implements OnInit{
 				}
 			},
 			error => {
-				this.showSuccess("Alerta","Error de Internet");
+				this.showError("Alerta","Error de Internet");
 				this.actualizar = true;
 			}
 		);
