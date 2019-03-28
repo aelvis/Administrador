@@ -1,7 +1,7 @@
 <nav-component></nav-component>
 <br>
 <div class="container-fluid">
-	<div class="row">
+	<div class="row" *ngIf="inicio == true">
 		<div class="col-md-1"></div>
 		<div class="col-md-3">
 			  <h1 class="h3 mb-3 font-weight-normal text-center" style="color: red"><u>Actualizar</u></h1>
@@ -19,7 +19,6 @@
 			  </div>
 			  <div class="form-group">
 			  	<button *ngIf="actualizar_producto == true" class="btn btn-info btn-block" (click)="actualizarProducto(nombre_actualizar_producto.value, codigo_actualizar_producto.value, descripcion_actualizar_producto.value)">Actualizar</button>
-			  	<button *ngIf="actualizar_producto == false" class="btn btn-success btn-block">Cargando</button>
 			  </div>
 		</div>
 		<div class="col-md-7">
@@ -47,6 +46,11 @@
 			</table>
 		</div>
 		<div class="col-md-1"></div>
+	</div>
+	<div class="row" *ngIf="inicio == false">
+		<div class="col-md-12">
+			<div class="loader" id="loader">Loading...</div>
+		</div>
 	</div>
 </div>
 <div class="modal fade" id="sucursalesAgregar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
@@ -103,11 +107,12 @@
 			      	</ng-template>
 			    </select>
 			</div>
-			<div class="form-group"><button *ngIf="agregar_sucursal_precio_botton == true" class="btn btn-primary" (click)="agregarPrecioProductoSucursal(precio.value,unidad_agregar.value)">Agregar</button></div>
+			<div class="form-group"><button *ngIf="agregar_sucursal_precio_botton == true" class="btn btn-primary btn-block" (click)="agregarPrecioProductoSucursal(precio.value,unidad_agregar.value)">Agregar</button></div>
 	      </div>
 	      <div class="col-md-8">
 	      	<h1 class="h3 mb-3 font-weight-normal text-center" style="color: red"><u>Lista de Precios</u></h1>
-			<table class="table">
+			<div *ngIf="alerta_productos"><p>{{alerta_productos}}</p></div>
+			<table class="table" *ngIf="!alerta_productos">
 			  <thead class="thead-dark">
 			    <tr>
 			      <th scope="col">#</th>

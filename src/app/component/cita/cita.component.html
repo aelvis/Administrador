@@ -1,0 +1,36 @@
+<nav-component></nav-component>
+<br>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<form class="form-inline">
+			<div class="form-group mx-sm-3 mb-2">
+		    	<input type="date" class="form-control" #fecha > 
+		  	</div>
+		  	<button class="btn btn-success" (click)="obtenerProductoConFecha(fecha.value)">Buscar</button>
+		  </form>
+			<h1 class="h3 mb-3 font-weight-normal text-center" style="color: red">TOTAL DEL DÍA S/ {{total?.total | number:'1.0'}}</h1>
+			<table *ngIf="inicio == true" class="table">
+			  <thead class="thead-dark">
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">Tipo Documento</th>
+			      <th scope="col">Nombre</th>
+			      <th scope="col">Total</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr *ngFor="let up of ticket; index as i">
+			      <th scope="row">{{i+1}}</th>
+			      <td (click)="abrirModal(up.id_ticket_cliente)">{{up.dni_ruc}}</td>
+			      <td>{{up.nombre}}</td>
+			      <td>S/. {{up.monto}}</td>
+			    </tr>
+			  </tbody>
+			</table>
+			<div *ngIf="inicio == false">
+				<div class="loader" id="loader">Loading...</div>
+			</div>
+		</div>
+	</div>
+</div>

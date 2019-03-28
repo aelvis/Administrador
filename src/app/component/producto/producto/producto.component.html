@@ -20,7 +20,7 @@
 			</div>
 		</div>
 		<div class="col-md-12">
-			<table class="table">
+			<table  *ngIf="inicio == true" class="table">
 			  <thead class="thead-dark">
 			    <tr>
 			      <th scope="col">#</th>
@@ -42,6 +42,9 @@
 			  </tbody>
 			</table>
 			<button *ngIf="actualizar == true" (click)="obtenerProducto()" class="btn btn-primary mb-2">Actualizar</button>
+				<div *ngIf="inicio == false">
+					<div class="loader" id="loader">Loading...</div>
+				</div>
 		</div>
 	</div>
 </div>
@@ -56,20 +59,23 @@
         </button>
       </div>
       <div class="modal-body">
-		<form>
+		<div  *ngIf="registrar == true">
 		  <div class="form-group">
 		    <label for="exampleFormControlInput1">Nombre</label>
-		    <input type="text" class="form-control" #nombre placeholder="Producto">
+		    <input type="text" class="form-control" [(ngModel)]="nombre">
 		  </div>
 		  <div class="form-group">
 		    <label for="exampleFormControlTextarea1">Descripción</label>
-		    <textarea class="form-control" rows="3" #descripcion></textarea>
+		    <textarea class="form-control" rows="3" [(ngModel)]="descripcion"></textarea>
 		  </div>
-		</form>
+		</div>
+				<div *ngIf="registrar == false">
+					<div class="loader" id="loader">Loading...</div>
+				</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button class="btn btn-primary" (click)="registrarProducto(nombre.value,descripcion.value)" data-dismiss="modal">Guardar</button>
+        <button class="btn btn-primary" (click)="registrarProducto()">Guardar</button>
       </div>
     </div>
   </div>

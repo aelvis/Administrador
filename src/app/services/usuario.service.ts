@@ -161,4 +161,34 @@ export class UsuarioService{
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/reportes/ticket/obtenerPedido', params, {headers: headers});	
 	}
+	obtenerCitasReporteService(){
+		let params = new HttpParams();
+		params = params.append('fecha', '');
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/reportes/ticket/obtenerCitasReporte', params, {headers: headers});	
+	}
+	obtenerCitasReporteConfechaService(fecha){
+		let params = new HttpParams();
+		params = params.append('fecha', fecha);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/reportes/ticket/obtenerCitasReporte', params, {headers: headers});	
+	}
+	obtenerCitasCajaReporteService(){
+		let params = new HttpParams();
+		params = params.append('fecha', '');
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/reportes/ticket/obtenerCitasCajaReporte', params, {headers: headers});	
+	}
+	obtenerCitasCajaReporteConfechaService(fecha){
+		let params = new HttpParams();
+		params = params.append('fecha', fecha);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/reportes/ticket/obtenerCitasCajaReporte', params, {headers: headers});	
+	}
+	obtenerPedidoCajaModalService(caja){
+		let params = new HttpParams();
+		params = params.append('caja', caja);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/reportes/ticket/obtenerPedidoCajaModal', params, {headers: headers});	
+	}
 }

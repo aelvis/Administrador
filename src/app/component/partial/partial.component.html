@@ -20,10 +20,13 @@
           Atención
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Atención</a>
-          <a class="dropdown-item" href="#">Reportes</a>
+          <a class="dropdown-item" [routerLink]="['/cita']">Citas</a>
+          <a class="dropdown-item" [routerLink]="['/producto-servicio']">Productos Servicio</a>
         </div>
       </li>
+    </ul>
+    <ul class="my-2 my-lg-0">
+        <a class="nav-link" style="color: white" href="" (click)="finalizar()">Finalizar</a> 
     </ul>
   </div>
 </nav>

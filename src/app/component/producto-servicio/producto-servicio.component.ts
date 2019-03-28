@@ -3,19 +3,17 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 @Component({
-  selector: 'app-venta',
-  templateUrl: './venta.component.html',
-  styleUrls: ['./venta.component.css']
+  selector: 'app-producto-servicio',
+  templateUrl: './producto-servicio.component.html',
+  styleUrls: ['./producto-servicio.component.css']
 })
-export class VentaComponent implements OnInit {
-	public actualizar:boolean;
-	public ticket:any = [];
-	public total;
-	public pedido:any = [];
+export class ProductoServicioComponent implements OnInit {
 	public inicio:boolean;
-	public modal:boolean;
+	public inicio_modal:boolean;
+	public total;
+	public ticket;
+	public pedido;
   	constructor(private toastr: ToastrService, private _usuarioService: UsuarioService, private _router: Router) {
-  		this.actualizar = true
   	}
 
 	ngOnInit(){
@@ -29,89 +27,80 @@ export class VentaComponent implements OnInit {
   	}
 	obtenerProducto(){
 		this.inicio = false;
-		this.actualizar = false;
-		this._usuarioService.enviarFechaObtenerTicket().subscribe(
+		this._usuarioService.obtenerCitasCajaReporteService().subscribe(
 			res => {
 				if(res["mensaje"].terminar){
 				  	localStorage.clear();
 				  	this._router.navigate(['/login']);
 				}else{
-					if(res["mensaje"].ticket){
-						this.ticket = res["mensaje"].ticket;
+					if(res["mensaje"].caja){
+						this.ticket = res["mensaje"].caja;
 						this.total = res["mensaje"].total;
-						this.actualizar = true;
 						this.inicio = true;
 					}else{
 						this.ticket = "No hay productos...";
-						this.actualizar = true;
 						this.inicio = true;
 					}
 				}
 			},
 			error => {
 				this.showSuccess("Alerta","Error de Internet");
-				this.actualizar = true;
 				this.inicio = true;
 			}
 		);
 	}
 	obtenerProductoConFecha(fecha){
-		this.actualizar = false;
+		this.inicio = false;
 		this.ticket = [];
 		this.total = [];
-		this.inicio = false;
-		this._usuarioService.enviarFechaObtenerTicketConfecha(fecha).subscribe(
+		this._usuarioService.obtenerCitasCajaReporteConfechaService(fecha).subscribe(
 			res => {
 				if(res["mensaje"].terminar){
 				  	localStorage.clear();
 				  	this._router.navigate(['/login']);
 				}else{
-					if(res["mensaje"].ticket){
-						this.ticket = res["mensaje"].ticket;
+					if(res["mensaje"].caja){
+						this.ticket = res["mensaje"].caja;
 						this.total = res["mensaje"].total;
 						this.inicio = true;
-						this.actualizar = true;
 					}else{
 						this.ticket = "No hay productos...";
-						this.actualizar = true;
 						this.inicio = true;
 					}
 				}
 			},
 			error => {
 				this.showSuccess("Alerta","Error de Internet");
-				this.actualizar = true;
 				this.inicio = true;
 			}
 		);
 	}
 	abrirModal(id){
-		this.modal = false;
+		this.inicio_modal = false;
 		$('#exampleModal').modal('show');
-		this._usuarioService.obtenerPedidoCajaModal(id).subscribe(
+		this._usuarioService.obtenerPedidoCajaModalService(id).subscribe(
 			res => {
 				if(res["mensaje"].terminar){
 				  	localStorage.clear();
 				  	this._router.navigate(['/login']);
 				}else{
-					if(res["mensaje"].ped){
-						this.pedido = res["mensaje"].ped;
-						this.modal = true;
+					if(res["mensaje"].caja){
+						this.pedido = res["mensaje"].caja;
+						this.inicio_modal = true;
 					}else{
-						this.showSuccess("Alerta","No hay Productos");
-						this.modal = true;
+						this.pedido = "No hay productos...";
+						this.inicio_modal = true;
 					}
 				}
 			},
 			error => {
 				this.showSuccess("Alerta","Error de Internet");
-				this.modal = true;
+				this.inicio_modal = true;
 			}
 		);
 	}
 	cerrarModal(){
 		this.pedido = [];
-		this.modal = true;
 		$('#exampleModal').modal('hide');
 	}
 }

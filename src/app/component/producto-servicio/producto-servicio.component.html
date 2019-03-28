@@ -14,7 +14,6 @@
 			  <thead class="thead-dark">
 			    <tr>
 			      <th scope="col">#</th>
-			      <th scope="col">Tipo Documento</th>
 			      <th scope="col">Nombre</th>
 			      <th scope="col">Total</th>
 			    </tr>
@@ -22,8 +21,7 @@
 			  <tbody>
 			    <tr *ngFor="let up of ticket; index as i">
 			      <th scope="row">{{i+1}}</th>
-			      <td (click)="abrirModal(up.id_ticket_cliente)">{{up.dni_ruc}}</td>
-			      <td>{{up.nombre}}</td>
+			      <td (click)="abrirModal(up.id_caja_pago)">{{up.nombre}}</td>
 			      <td>S/. {{up.total | number:'1.0'}}</td>
 			    </tr>
 			  </tbody>
@@ -34,33 +32,31 @@
 		</div>
 	</div>
 </div>
-
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-body">
-		<table *ngIf="modal == true" class="table">
+		<table *ngIf="inicio_modal == true" class="table">
 					  <thead class="thead-dark">
 					    <tr>
 					      <th scope="col">#</th>
-					      <th scope="col">Producto</th>
-					      <th scope="col">Unidad</th>
+					      <th scope="col">Nombre</th>
 					      <th scope="col">Cantidad</th>
+					      <th scope="col">Indicaciones</th>
 					      <th scope="col">Total</th>
 					    </tr>
 					  </thead>
 					  <tbody>
 					    <tr *ngFor="let pedi of pedido; index as i">
 					      <th scope="row">{{i+1}}</th>
-					      <td>{{pedi.nombre_producto}}</td>
-					      <td>{{pedi.nombre_unidad}}</td>
-					      <td *ngIf="pedi.estado == 2"><input type="text" value="{{pedi.cantidad}}" class="form-control" #cantidad_actualizar placeholder="Cantidad" (keyup.enter)="actualizarPedidoAlCarrito(pedi.id,cantidad_actualizar.value,pedi.precio_producto, pedi.representacion, pedi.id_producto_sucursal)"></td>
-					      <td *ngIf="pedi.estado == 1">{{ pedi.cantidad}}</td>
-					      <td>S/. {{ pedi.precio}}</td>
+					      <td>{{pedi.descripcion}}</td>
+					      <td>{{ pedi.cantidad}}</td>
+					      <td>{{ pedi.indicacion}}</td>
+					      <td>S/. {{ pedi.monto}}</td>
 					    </tr>
 					  </tbody>
 					</table>
-					<div *ngIf="modal == false">
+			<div *ngIf="inicio_modal == false">
 				<div class="loader" id="loader">Loading...</div>
 			</div>
       </div>

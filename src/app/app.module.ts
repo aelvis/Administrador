@@ -19,6 +19,8 @@ import { ReporteProductoComponent } from './component/producto/reporte/reporte.c
 import { AdminGuard } from './services/admin.guard';
 import { VentaComponent } from './component/venta/venta.component';
 import { VentaVerComponent } from './component/venta-ver/venta-ver.component';
+import { CitaComponent } from './component/cita/cita.component';
+import { ProductoServicioComponent } from './component/producto-servicio/producto-servicio.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { VentaVerComponent } from './component/venta-ver/venta-ver.component';
 	ProductoEditarComponent,
 	ReporteProductoComponent,
 	VentaComponent,
-	VentaVerComponent
+	VentaVerComponent,
+	CitaComponent,
+	ProductoServicioComponent
   ],
   imports: [
     BrowserModule,

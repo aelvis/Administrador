@@ -8,6 +8,8 @@ import { ProductoEditarComponent } from './component/producto/producto-editar/pr
 import { ReporteProductoComponent } from './component/producto/reporte/reporte.component';
 import { VentaComponent } from './component/venta/venta.component';
 import { VentaVerComponent } from './component/venta-ver/venta-ver.component';
+import { CitaComponent } from './component/cita/cita.component';
+import { ProductoServicioComponent } from './component/producto-servicio/producto-servicio.component';
 
 import { AdminGuard } from './services/admin.guard';
 
@@ -21,6 +23,8 @@ const appRoutes: Routes = [
 	{path: 'producto-reporte/:id_producto', component: ReporteProductoComponent, canActivate: [AdminGuard]},
 	{path: 'venta', component: VentaComponent, canActivate: [AdminGuard]},
 	{path: 'venta/:id_venta', component: VentaVerComponent, canActivate: [AdminGuard]},
+	{path: 'cita', component: CitaComponent, canActivate: [AdminGuard]},
+	{path: 'producto-servicio', component: ProductoServicioComponent, canActivate: [AdminGuard]},
 	{path: '**', component: LoginComponent},
 ];
 
