@@ -26,6 +26,10 @@ export class ProductoEditarComponent implements OnInit{
 	public precio_sucursal_pro;
 	public inicio:boolean;
 	public alerta_productos;
+	public lote;
+	public factura;
+	public laboratorio;
+	public porcentaje;
 	constructor(private toastr: ToastrService,private _usuarioService: UsuarioService, private _router: Router, private route:ActivatedRoute){
 		this.route.params.forEach(x => this.id_producto = x['id_producto']);
 		this.agregar_sucursal_botton = true;
@@ -68,10 +72,10 @@ export class ProductoEditarComponent implements OnInit{
 			}
 		);
 	}
-	actualizarProducto(nombre,codigo,descripcion){
+	actualizarProducto(nombre,codigo,descripcion,laboratorio,vencimiento){
 		this.actualizar_producto = false;
 		this.inicio = false;
-		this._usuarioService.actualizarProductosEditar(this.id_producto,nombre,codigo,descripcion).subscribe(
+		this._usuarioService.actualizarProductosEditar(this.id_producto,nombre,codigo,descripcion,laboratorio,vencimiento).subscribe(
 			res => {
 				if(res["mensaje"].terminar){
 				  	localStorage.clear();
@@ -98,7 +102,7 @@ export class ProductoEditarComponent implements OnInit{
 		this.inicio = false;
 		this.agregar_sucursal_botton = false;
 		if(stock.length > 0 && sucursal.length > 0){
-			this._usuarioService.agregarSucursalesProductosEditar(stock,sucursal,this.id_producto).subscribe(
+			this._usuarioService.agregarSucursalesProductosEditar(stock,sucursal,this.id_producto,this.lote,this.factura,this.laboratorio).subscribe(
 				res => {
 					if(res["mensaje"].terminar){
 					  	localStorage.clear();
@@ -108,6 +112,9 @@ export class ProductoEditarComponent implements OnInit{
 							this.showSuccess("Alerta","Agregar");
 							this.obtenerProducto();
 							this.nombre_sucursal = "";
+							this.lote = "";
+							this.factura = "";
+							this.laboratorio = "";
 							this.agregar_sucursal_botton = true;
 							$('#sucursalesAgregar').modal('hide');
 						}else{
@@ -259,9 +266,9 @@ export class ProductoEditarComponent implements OnInit{
 		this.unidad_pro = [];
 		$('#modalAgregarPrecio').modal('hide');
 	}
-	editarSucursalProductoPrecio(stock,id){
+	editarSucursalProductoPrecio(stock,id,lote,factura,laboratorio){
 		this.inicio = false;
-		this._usuarioService.actualizarSucursalesProductosEditar(stock,id).subscribe(
+		this._usuarioService.actualizarSucursalesProductosEditar(stock,id,lote,factura,laboratorio).subscribe(
 			res => {
 				if(res["mensaje"].terminar){
 					localStorage.clear();
@@ -284,9 +291,9 @@ export class ProductoEditarComponent implements OnInit{
 			}
 		);
 	}
-	editarSucursalProducto(precio,id){
+	editarSucursalProducto(id,precio_compra,porcentaje){
 		this.inicio = false;
-		this._usuarioService.actualizarProductoSucursalEditarPrecio(precio,id).subscribe(
+		this._usuarioService.actualizarProductoSucursalEditarPrecio(id,precio_compra,porcentaje).subscribe(
 			res => {
 				if(res["mensaje"].terminar){
 					localStorage.clear();
@@ -385,7 +392,7 @@ export class ProductoEditarComponent implements OnInit{
 		this.inicio = false;
 		this.agregar_sucursal_precio_botton = false;
 		if(precio.length > 0 && unidad_agregar.length > 0){
-			this._usuarioService.agregarSucursalesPrecioProductosEditar(this.producto_sucursal_id,unidad_agregar,precio,this.id_producto,this.sucursal_id).subscribe(
+			this._usuarioService.agregarSucursalesPrecioProductosEditar(this.producto_sucursal_id,unidad_agregar,precio,this.id_producto,this.sucursal_id,this.porcentaje).subscribe(
 				res => {
 					if(res["mensaje"].terminar){
 					  	localStorage.clear();
@@ -404,6 +411,7 @@ export class ProductoEditarComponent implements OnInit{
 											this.productos_precio_su = res["mensaje"].productospreciosu;
 											this.unidad_pro = res["mensaje"].unidad_pro;
 											this.precio_sucursal_pro = "";
+											this.porcentaje = "";
 											this.agregar_sucursal_precio_botton = true;
 											this.inicio = true;
 										}else{

@@ -21,6 +21,10 @@ import { VentaComponent } from './component/venta/venta.component';
 import { VentaVerComponent } from './component/venta-ver/venta-ver.component';
 import { CitaComponent } from './component/cita/cita.component';
 import { ProductoServicioComponent } from './component/producto-servicio/producto-servicio.component';
+import { UnidadComponent } from './component/unidad/unidad.component';
+import { UsuarioComponent } from './component/usuario/usuario.component';
+import { NotaCreditoFacturaComponent } from './component/nota-credito-factura/nota-credito-factura.component';
+import { NotaCreditoBoletaComponent } from './component/nota-credito-boleta/nota-credito-boleta.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,11 @@ import { ProductoServicioComponent } from './component/producto-servicio/product
 	VentaComponent,
 	VentaVerComponent,
 	CitaComponent,
-	ProductoServicioComponent
+	ProductoServicioComponent,
+	UnidadComponent,
+	UsuarioComponent,
+	NotaCreditoFacturaComponent,
+	NotaCreditoBoletaComponent
   ],
   imports: [
     BrowserModule,

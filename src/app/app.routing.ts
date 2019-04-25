@@ -10,15 +10,21 @@ import { VentaComponent } from './component/venta/venta.component';
 import { VentaVerComponent } from './component/venta-ver/venta-ver.component';
 import { CitaComponent } from './component/cita/cita.component';
 import { ProductoServicioComponent } from './component/producto-servicio/producto-servicio.component';
-
+import { UnidadComponent } from './component/unidad/unidad.component';
 import { AdminGuard } from './services/admin.guard';
-
+import { UsuarioComponent } from './component/usuario/usuario.component';
+import { NotaCreditoFacturaComponent } from './component/nota-credito-factura/nota-credito-factura.component';
+import { NotaCreditoBoletaComponent } from './component/nota-credito-boleta/nota-credito-boleta.component';
 const appRoutes: Routes = [
 	{path: '', component: LoginComponent},
 	{path: '', redirectTo: 'login', pathMatch: 'full'},
 	{path: 'login', component: LoginComponent},
 	{path: 'inicio', component: InicioComponent, canActivate: [AdminGuard]},
 	{path: 'producto', component: ProductoComponent, canActivate: [AdminGuard]},
+	{path: 'nota-credito-factura', component: NotaCreditoFacturaComponent, canActivate: [AdminGuard]},
+	{path: 'nota-credito-boleta', component: NotaCreditoBoletaComponent, canActivate: [AdminGuard]},
+	{path: 'usuario', component: UsuarioComponent, canActivate: [AdminGuard]},
+	{path: 'unidad', component: UnidadComponent, canActivate: [AdminGuard]},
 	{path: 'producto-editar/:id_producto', component: ProductoEditarComponent, canActivate: [AdminGuard]},
 	{path: 'producto-reporte/:id_producto', component: ReporteProductoComponent, canActivate: [AdminGuard]},
 	{path: 'venta', component: VentaComponent, canActivate: [AdminGuard]},

@@ -2,7 +2,6 @@
 <br>
 <div class="container-fluid">
 	<div class="row" *ngIf="inicio == true">
-		<div class="col-md-1"></div>
 		<div class="col-md-3">
 			  <h1 class="h3 mb-3 font-weight-normal text-center" style="color: red"><u>Actualizar</u></h1>
 			  <div class="form-group">
@@ -14,14 +13,22 @@
 			    <input type="text" class="form-control" #codigo_actualizar_producto value="{{obtener_producto_editar?.codigo}}">
 			  </div>
 			  <div class="form-group">
+			    <label for="exampleFormControlInput1">Laboratorio</label>
+			    <input type="text" class="form-control" #nombre_actualizar_laboratorio value="{{obtener_producto_editar?.laboratorio}}">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleFormControlInput1">Fecha vencimiento</label>
+			    <input type="date" class="form-control" #codigo_actualizar_vencimiento value="{{obtener_producto_editar?.vencimiento}}">
+			  </div>
+			  <div class="form-group">
 			    <label for="exampleFormControlTextarea1">Descripción</label>
 			    <textarea class="form-control"  #descripcion_actualizar_producto rows="3">{{obtener_producto_editar?.descripcion}}</textarea>
 			  </div>
 			  <div class="form-group">
-			  	<button *ngIf="actualizar_producto == true" class="btn btn-info btn-block" (click)="actualizarProducto(nombre_actualizar_producto.value, codigo_actualizar_producto.value, descripcion_actualizar_producto.value)">Actualizar</button>
+			  	<button *ngIf="actualizar_producto == true" class="btn btn-info btn-block" (click)="actualizarProducto(nombre_actualizar_producto.value, codigo_actualizar_producto.value, descripcion_actualizar_producto.value,nombre_actualizar_laboratorio.value,codigo_actualizar_vencimiento.value)">Actualizar</button>
 			  </div>
 		</div>
-		<div class="col-md-7">
+		<div class="col-md-8">
 			<h1 class="h3 mb-3 font-weight-normal text-center" style="color: red"><u data-toggle="modal" data-target="#sucursalesAgregar">Sucursales</u></h1>
 			<table class="table">
 			  <thead class="thead-dark">
@@ -29,6 +36,9 @@
 			      <th scope="col">#</th>
 			      <th scope="col">Sucursal</th>
 			      <th scope="col">Stock</th>
+			      <th scope="col">Lote</th>
+			      <th scope="col">Factura</th>
+			      <th scope="col">Laboratorio</th>
 			      <th scope="col">Precio</th>
 			      <th scope="col">Estado</th>
 			    </tr>
@@ -37,7 +47,10 @@
 			    <tr *ngFor="let ps of obtener_producto_sucursal; index as i">
 			      <th scope="row">{{i+1}}</th>
 			      <td>{{ps.nombre}}</td>
-			      <td><input type="number" class="form-control" value="{{ps.stock}}" #stock_editar_producto_sucursal (keyup.enter)="editarSucursalProductoPrecio(stock_editar_producto_sucursal.value,ps.id)"></td>
+			      <td><input type="number" class="form-control" value="{{ps.stock}}" #stock_editar_producto_sucursal (keyup.enter)="editarSucursalProductoPrecio(stock_editar_producto_sucursal.value,ps.id,lote_editar_producto_sucursal.value,factura_editar_producto_sucursal.value,laboratorio_editar_producto_sucursal.value)"></td>
+			      <td><input type="text" class="form-control" #lote_editar_producto_sucursal value="{{ps.lote}}"></td>
+			      <td><input type="text" class="form-control" #factura_editar_producto_sucursal value="{{ps.factura}}"></td>
+			      <td><input type="text" class="form-control" #laboratorio_editar_producto_sucursal value="{{ps.laboratorio}}"></td>
 			      <td><button class="btn btn-danger" (click)="modalAgregarPrecio(ps.id,ps.codigo_sucursal)">Precio</button></td>
 			      <td *ngIf="ps.nombre_estado == 'Activo' && estado_pro_sucu == true" class="table-success" (click)="desactivarStockSucursal(ps.id)">{{ps.nombre_estado}}</td>
 			      <td *ngIf="ps.nombre_estado == 'Desactivado' && estado_pro_sucu == true" class="table-danger" (click)="activarStockSucursal(ps.id)">{{ps.nombre_estado}}</td>
@@ -68,6 +81,18 @@
 		    <label for="exampleFormControlInput1">Stock</label>
 		    <input type="number" class="form-control" #stock placeholder="80" [(ngModel)]="nombre_sucursal">
 		  </div>
+		  <div class="form-group">
+		    <label>Lote</label>
+		    <input type="text" class="form-control" [(ngModel)]="lote">
+		  </div>
+		  <div class="form-group">
+		    <label>Factura</label>
+		    <input type="text" class="form-control" [(ngModel)]="factura">
+		  </div>
+		  <div class="form-group">
+		    <label>laboratorio</label>
+		    <input type="text" class="form-control" [(ngModel)]="laboratorio">
+		  </div>
 		    <div class="form-group">
 			    <label for="exampleFormControlSelect1">Sucursal</label>
 			    <select class="form-control" #sucursal_agregar>
@@ -92,12 +117,16 @@
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-body">
-      	<div class="row">
-	      <div class="col-md-4">
+      	<div class="row"  *ngIf="inicio == true">
+	      <div class="col-md-2">
 	      	<h1 class="h3 mb-3 font-weight-normal text-center" style="color: red"><u>Agregar Precio</u></h1>
 	      	<div class="form-group">
-			    <label for="exampleFormControlInput1">Precio</label>
-			    <input type="text" class="form-control" #precio placeholder="8.3" [(ngModel)]="precio_sucursal_pro">
+			    <label for="exampleFormControlInput1">Precio Compra</label>
+			    <input type="text" class="form-control" #precio [(ngModel)]="precio_sucursal_pro">
+			</div>
+			<div class="form-group">
+			    <label for="exampleFormControlInput1">Porcentaje Vender</label>
+			    <input type="text" class="form-control"  [(ngModel)]="porcentaje">
 			</div>
 		    <div class="form-group">
 			    <label for="exampleFormControlSelect1">Unidades</label>
@@ -109,14 +138,16 @@
 			</div>
 			<div class="form-group"><button *ngIf="agregar_sucursal_precio_botton == true" class="btn btn-primary btn-block" (click)="agregarPrecioProductoSucursal(precio.value,unidad_agregar.value)">Agregar</button></div>
 	      </div>
-	      <div class="col-md-8">
+	      <div class="col-md-10">
 	      	<h1 class="h3 mb-3 font-weight-normal text-center" style="color: red"><u>Lista de Precios</u></h1>
 			<div *ngIf="alerta_productos"><p>{{alerta_productos}}</p></div>
 			<table class="table" *ngIf="!alerta_productos">
 			  <thead class="thead-dark">
 			    <tr>
 			      <th scope="col">#</th>
-			      <th scope="col">Precio</th>
+			      <th scope="col">Precio Compra</th>
+			      <th scope="col">Porcentaje</th>
+			      <th scope="col">Precio Final</th>
 			      <th scope="col">Unidad</th>
 			      <th scope="col">estado</th>
 			    </tr>
@@ -124,7 +155,9 @@
 			  <tbody>
 			    <tr *ngFor="let pps of productos_precio_su; index as i">
 			      <th scope="row">{{i+1}}</th>
-			      <td><input type="text" class="form-control" value="{{pps.precio}}" #precio_editar_producto_sucursal (keyup.enter)="editarSucursalProducto(precio_editar_producto_sucursal.value,pps.id)"></td>
+			      <td><input type="text" class="form-control" value="{{pps.precio_compra}}" #precio_compra_editar_producto_sucursal></td>
+			      <td><input type="text" class="form-control" value="{{pps.porcentaje}}" #porcentaje_editar_producto_sucursal (keyup.enter)="editarSucursalProducto(pps.id,precio_compra_editar_producto_sucursal.value,porcentaje_editar_producto_sucursal.value)"></td>
+			      <td><input type="text" class="form-control" value="{{pps.precio}}"></td>
 			      <td>{{pps.nombre_unidad}}</td>
 			      <td *ngIf="pps.estado == '1' && estado_pro_sucu_pre == true" class="table-success" (click)="desactivarPrecioSucursal(pps.id)">Activo</td>
 			      <td *ngIf="pps.estado == '2' && estado_pro_sucu_pre == true" class="table-danger" (click)="activarPrecioSucursal(pps.id)">Desactivado</td>
@@ -133,6 +166,11 @@
 			</table>
 	      </div>
       	</div>
+      		<div class="row" *ngIf="inicio == false">
+		<div class="col-md-12">
+			<div class="loader" id="loader">Loading...</div>
+		</div>
+	</div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-warning" (click)="cerrarModalPrecio()">Cerrar</button>

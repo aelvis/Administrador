@@ -12,7 +12,10 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" [routerLink]="['/producto']">Productos</a>
+          <a class="dropdown-item" [routerLink]="['/unidad']">Unidades</a>
           <a class="dropdown-item" [routerLink]="['/venta']">Ventas</a>
+          <a class="dropdown-item" [routerLink]="['/nota-credito-boleta']">Nota de Crédito Boleta</a>
+          <a class="dropdown-item" [routerLink]="['/nota-credito-factura']">Nota de Crédito Factura</a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -24,6 +27,7 @@
           <a class="dropdown-item" [routerLink]="['/producto-servicio']">Productos Servicio</a>
         </div>
       </li>
+      <li class="nav-item"><a class="nav-link" style="color: white"  [routerLink]="['/usuario']">Usuarios</a> </li>
     </ul>
     <ul class="my-2 my-lg-0">
         <a class="nav-link" style="color: white" href="" (click)="finalizar()">Finalizar</a> 

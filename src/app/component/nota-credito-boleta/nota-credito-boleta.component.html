@@ -1,0 +1,37 @@
+<nav-component></nav-component>
+<br>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<form class="form-inline">
+				<div class="form-group mx-sm-3 mb-2">
+		    		<input type="date" class="form-control" #fecha > 
+		  		</div>
+		  		<button class="btn btn-success" (click)="obtenerProductoConFecha(fecha.value)">Buscar</button>
+		  	</form>
+			<table *ngIf="inicio == true" class="table">
+			  <thead class="thead-dark">
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">Serie</th>
+			      <th scope="col">Descripción</th>
+			      <th scope="col">Fecha</th>
+			      <th scope="col">Ver</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr *ngFor="let up of lista; index as i">
+			      <th scope="row">{{i+1}}</th>
+			      <th>{{up.serie}}</th>
+			      <th>{{up.descripcion}}</th>
+			      <td>{{up.fecha}}</td>
+			      <td><a href="{{up.url}}" target="_blank" class="btn btn-success">Ver</a></td>
+			    </tr>
+			  </tbody>
+			</table>
+			<div *ngIf="inicio == false">
+				<div class="loader" id="loader">Loading...</div>
+			</div>
+		</div>
+	</div>
+</div>

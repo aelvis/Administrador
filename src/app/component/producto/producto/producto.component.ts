@@ -21,6 +21,8 @@ export class ProductoComponent implements OnInit{
 	public registrar:boolean;
 	public nombre;
 	public descripcion;
+	public laboratorio;
+	public fecha_vencimiento;
 	constructor(private toastr: ToastrService, private _usuarioService: UsuarioService, private _router: Router){
 		this.estado = true;
 		this.buscar_nombre = true;
@@ -67,13 +69,12 @@ export class ProductoComponent implements OnInit{
 		);
 	}
 	registrarProducto(){
-
 		if(this.nombre == undefined){
 			this.showError("Alerta","Ingresar el Nombre del Producto");
 			return;
 		}else{
 			this.registrar = false;
-			this._usuarioService.registrarProducto(this.nombre,this.descripcion).subscribe(
+			this._usuarioService.registrarProducto(this.nombre,this.descripcion,this.laboratorio,this.fecha_vencimiento).subscribe(
 				res => {
 					if(res["mensaje"].terminar){
 					  	localStorage.clear();
@@ -85,6 +86,8 @@ export class ProductoComponent implements OnInit{
 							this.obtenerProducto();
 							this.nombre = "";
 							this.descripcion = "";
+							this.laboratorio = "";
+							this.fecha_vencimiento = "";
 						}else{
 							this.showError("Alerta","Conexión Lenta, volver a Intentar");
 							this.registrar = true;
