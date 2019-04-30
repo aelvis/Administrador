@@ -25,6 +25,8 @@ import { UnidadComponent } from './component/unidad/unidad.component';
 import { UsuarioComponent } from './component/usuario/usuario.component';
 import { NotaCreditoFacturaComponent } from './component/nota-credito-factura/nota-credito-factura.component';
 import { NotaCreditoBoletaComponent } from './component/nota-credito-boleta/nota-credito-boleta.component';
+import { MelvinComponent } from './component/melvin/melvin.component';
+import { PruebaComponent } from './component/prueba/prueba.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { NotaCreditoBoletaComponent } from './component/nota-credito-boleta/nota
 	UnidadComponent,
 	UsuarioComponent,
 	NotaCreditoFacturaComponent,
-	NotaCreditoBoletaComponent
+	NotaCreditoBoletaComponent,
+	MelvinComponent,
+	PruebaComponent
   ],
   imports: [
     BrowserModule,

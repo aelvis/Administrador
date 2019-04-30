@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { GLOBAL } from '../../services/global';
 import { UsuarioService } from '../../services/usuario.service';
 import { ToastrService } from 'ngx-toastr';
+ 
 
 @Component({
   selector: 'app-usuario',
@@ -14,7 +15,7 @@ export class UsuarioComponent implements OnInit {
 	public password;
 	public rol;
 	public sucursal;
-	public usuario;
+	public usuario:any = [];
 	public inicio:boolean;
 	public sucursal_for;
 	public rol_for;
@@ -31,7 +32,7 @@ export class UsuarioComponent implements OnInit {
     	this.toastr.error(mensaje, titulo);
   	}
 	obtenerProducto(){
-		this.inicio = false;
+		//this.inicio = false;
 		this._usuarioService.obtenerUsuarios().subscribe(
 			res => {
 				if(res["mensaje"].terminar){

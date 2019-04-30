@@ -37,7 +37,7 @@ export class UsuarioService{
 	}
 	obtenerUsuarios(){
 		let params = new HttpParams();
-		params = params.append('nuevo', 'nuevo');
+		params = params.append('nuevoxD', 'xD');
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/productos/producto/obtenerUsuarios', params, {headers: headers});
 	}

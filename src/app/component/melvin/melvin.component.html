@@ -1,0 +1,10 @@
+<nav-component></nav-component>
+
+<h1>{{titulo}}</h1>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio veniam soluta obcaecati pariatur eligendi, laudantium, asperiores, repellendus sit corporis illum unde ratione excepturi quisquam cumque commodi libero, ipsa minus nam.</p>
+	
+<button *ngIf="datos == false" class="btn btn-success" (click)="activar()">Ver la vista</button>
+<button *ngIf="datos == true" class="btn btn-success" (click)="desactivar()">Ver la vista</button>
+<div *ngIf="datos == true">
+	<app-prueba></app-prueba>
+</div>

@@ -15,10 +15,12 @@ import { AdminGuard } from './services/admin.guard';
 import { UsuarioComponent } from './component/usuario/usuario.component';
 import { NotaCreditoFacturaComponent } from './component/nota-credito-factura/nota-credito-factura.component';
 import { NotaCreditoBoletaComponent } from './component/nota-credito-boleta/nota-credito-boleta.component';
+import { MelvinComponent } from './component/melvin/melvin.component';
 const appRoutes: Routes = [
 	{path: '', component: LoginComponent},
 	{path: '', redirectTo: 'login', pathMatch: 'full'},
 	{path: 'login', component: LoginComponent},
+	{path: 'melvin', component: MelvinComponent},
 	{path: 'inicio', component: InicioComponent, canActivate: [AdminGuard]},
 	{path: 'producto', component: ProductoComponent, canActivate: [AdminGuard]},
 	{path: 'nota-credito-factura', component: NotaCreditoFacturaComponent, canActivate: [AdminGuard]},
@@ -35,4 +37,4 @@ const appRoutes: Routes = [
 ];
 
 export const appRoutingProviders: any[] = [];
-export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, { enableTracing: true, useHash:true });
+export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, { enableTracing: false, useHash:true });
