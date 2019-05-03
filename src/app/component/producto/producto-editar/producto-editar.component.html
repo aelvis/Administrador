@@ -117,7 +117,7 @@
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-body">
-      	<div class="row"  *ngIf="inicio == true">
+      	<div class="row" *ngIf="inicio == true">
 	      <div class="col-md-2">
 	      	<h1 class="h3 mb-3 font-weight-normal text-center" style="color: red"><u>Agregar Precio</u></h1>
 	      	<div class="form-group">
@@ -125,7 +125,7 @@
 			    <input type="text" class="form-control" #precio [(ngModel)]="precio_sucursal_pro">
 			</div>
 			<div class="form-group">
-			    <label for="exampleFormControlInput1">Porcentaje Vender</label>
+			    <label for="exampleFormControlInput1">Precio Final</label>
 			    <input type="text" class="form-control"  [(ngModel)]="porcentaje">
 			</div>
 		    <div class="form-group">
@@ -146,7 +146,6 @@
 			    <tr>
 			      <th scope="col">#</th>
 			      <th scope="col">Precio Compra</th>
-			      <th scope="col">Porcentaje</th>
 			      <th scope="col">Precio Final</th>
 			      <th scope="col">Unidad</th>
 			      <th scope="col">estado</th>
@@ -155,9 +154,8 @@
 			  <tbody>
 			    <tr *ngFor="let pps of productos_precio_su; index as i">
 			      <th scope="row">{{i+1}}</th>
-			      <td><input type="text" class="form-control" value="{{pps.precio_compra}}" #precio_compra_editar_producto_sucursal></td>
-			      <td><input type="text" class="form-control" value="{{pps.porcentaje}}" #porcentaje_editar_producto_sucursal (keyup.enter)="editarSucursalProducto(pps.id,precio_compra_editar_producto_sucursal.value,porcentaje_editar_producto_sucursal.value)"></td>
-			      <td><input type="text" class="form-control" value="{{pps.precio}}"></td>
+			      <td><input type="text" class="form-control" value="{{pps.precio_compra}}" #precio_compra_editar_producto_sucursal (keyup.enter)="editarSucursalProducto(pps.id,precio_compra_editar_producto_sucursal.value)"></td>
+			      <td><input type="text" class="form-control" #preciofinal_opcion value="{{pps.precio}}" (keyup.enter)="editarSucursalProductoFinal(pps.id,preciofinal_opcion.value)"></td>
 			      <td>{{pps.nombre_unidad}}</td>
 			      <td *ngIf="pps.estado == '1' && estado_pro_sucu_pre == true" class="table-success" (click)="desactivarPrecioSucursal(pps.id)">Activo</td>
 			      <td *ngIf="pps.estado == '2' && estado_pro_sucu_pre == true" class="table-danger" (click)="activarPrecioSucursal(pps.id)">Desactivado</td>

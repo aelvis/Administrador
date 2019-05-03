@@ -291,9 +291,51 @@ export class ProductoEditarComponent implements OnInit{
 			}
 		);
 	}
-	editarSucursalProducto(id,precio_compra,porcentaje){
+	editarSucursalProducto(id,precio_compra){
 		this.inicio = false;
-		this._usuarioService.actualizarProductoSucursalEditarPrecio(id,precio_compra,porcentaje).subscribe(
+		this._usuarioService.actualizarProductoSucursalEditarPrecio(id,precio_compra).subscribe(
+			res => {
+				if(res["mensaje"].terminar){
+					localStorage.clear();
+					this._router.navigate(['/login']);
+				}else{
+					if(res["mensaje"].codigo == 'success'){
+						this.showSuccess("Alerta","Actualizado");
+							this._usuarioService.obtenerPreciosProductoSucursales(this.producto_sucursal_id).subscribe(
+								res => {
+									if(res["mensaje"].terminar){
+									  	localStorage.clear();
+									  	this._router.navigate(['/login']);
+									}else{
+										if(res["mensaje"].productospreciosu){
+											this.inicio = true;
+											this.productos_precio_su = res["mensaje"].productospreciosu;
+										}else{
+											this.showError("Alerta","No hay Precios de Productos");
+											this.inicio = true;
+										}
+									}
+								},
+								error => {
+									this.showError("Alerta","Error de Internet");
+									this.inicio = true;
+								}
+							);
+					}else{
+						this.showError("Alerta","Error de Internet - volver a Intentarlo");
+						this.inicio = true;
+					}
+				}
+			},
+			error => {
+				this.showError("Alerta","Error de Internet");
+				this.inicio = true;
+			}
+		);
+	}
+	editarSucursalProductoFinal(id,precio_final){
+		this.inicio = false;
+		this._usuarioService.actualizarProductoSucursalEditarPrecioFinal(id,precio_final).subscribe(
 			res => {
 				if(res["mensaje"].terminar){
 					localStorage.clear();

@@ -196,11 +196,17 @@ export class UsuarioService{
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/productos/producto/desactivarProductoUnidad', params, {headers: headers});	
 	}
-	actualizarProductoSucursalEditarPrecio(id,precio_compra,porcentaje){
+	actualizarProductoSucursalEditarPrecio(id,precio_compra){
 		let params = new HttpParams();
 		params = params.append('id', id);
 		params = params.append('precio_compra', precio_compra);
-		params = params.append('porcentaje', porcentaje);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/productos/producto/actualizarProductoUnidad', params, {headers: headers});	
+	}
+	actualizarProductoSucursalEditarPrecioFinal(id,precio_final){
+		let params = new HttpParams();
+		params = params.append('id', id);
+		params = params.append('precio_final', precio_final);
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/productos/producto/actualizarProductoUnidad', params, {headers: headers});	
 	}
